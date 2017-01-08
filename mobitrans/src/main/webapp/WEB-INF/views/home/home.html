@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Page title -->
+<title>Mobitrans | Tableau de board</title>
+
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+<!--<link rel="shortcut icon" type="image/ico" href="favicon.ico" />-->
+
+<!-- Vendor styles -->
+<link href="../../../resources/fontawesome/css/font-awesome.css"
+	rel="stylesheet" media="screen"
+	th:href="@{/resources/fontawesome/css/font-awesome.css}" />
+<link href="../../../resources/metisMenu/metisMenu.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/metisMenu/metisMenu.css}" />
+<link href="../../../resources/animate.css/animate.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/animate.css/animate.css}" />
+<link href="../../../resources/bootstrap/css/bootstrap.css"
+	rel="stylesheet" media="screen"
+	th:href="@{/resources/bootstrap/css/bootstrap.css}" />
+<link rel="stylesheet" media="screen"
+	th:href="@{/resources/bootstrap/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css}" />
+
+<!-- App styles -->
+<link
+	href="../../../resources/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css"
+	rel="stylesheet" media="screen"
+	th:href="@{/resources/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css}" />
+<link href="../../../resources/fonts/pe-icon-7-stroke/css/helper.css"
+	rel="stylesheet" media="screen"
+	th:href="@{/resources/fonts/pe-icon-7-stroke/css/helper.css}" />
+<link href="../../../resources/style/style.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/style/style.css}" />
+
+</head>
+<body class="fixed-navbar fixed-sidebar">
+
+	<!-- Simple splash screen-->
+	<div class="splash">
+		<div class="color-line"></div>
+		<div th:replace="fragments/splash :: splash">&nbsp;</div>
+	</div>
+	
+	<!--[if lt IE 7]>
+<p class="alert alert-danger">You are using an <strong>outdated</strong>
+ browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+	<!-- Header -->
+	<div th:replace="fragments/header :: header">&nbsp;</div>
+
+	<!-- Navigation case -->
+	<aside id="menu" sec:authorize="hasRole('ROLE_ADMIN')">
+		<div th:replace="fragments/adminNav :: navigation"></div>
+	</aside>
+	<aside id="menu" sec:authorize="hasRole('ROLE_GUICHETIER')">
+		<div th:replace="fragments/guichetierNav :: navigation"></div>
+	</aside>
+	<aside id="menu" sec:authorize="hasRole('ROLE_SUPERVISEUR')">
+		<div th:replace="fragments/superviseurNav :: navigation"></div>
+	</aside>
+	<aside id="menu" sec:authorize="hasRole('ROLE_CONTROLLER')">
+		<div th:replace="fragments/controllerNav :: navigation"></div>
+	</aside>
+
+	<!-- Main Wrapper -->
+	<div id="wrapper">
+
+		<div class="content animate-panel">
+			<div class="row">
+				<div class="col-lg-12 text-center m-t-md">
+					<h2>Tableau de bord</h2>
+
+					<p>
+						Derniere connexion : 28/01/2016<br> <strong>Ip utilisee</strong>:127.0.0.1
+					</p>
+				</div>
+			</div>
+			
+		</div>
+
+		<!-- Footer-->
+		<footer class="footer">
+			<div th:replace="fragments/footer :: footer">&copy; 2013 The
+				Static Templates</div>
+		</footer>
+
+	</div>
+
+	<!-- Vendor scripts -->
+	<script th:src="@{/resources/jquery/jquery.min.js}"></script>
+	<script th:src="@{/resources/slimScroll/jquery.slimscroll.min.js}"></script>
+	<script th:src="@{/resources/bootstrap/js/bootstrap.min.js}"></script>
+	<script th:src="@{/resources/metisMenu/metisMenu.min.js}"></script>
+
+	<!-- App scripts -->
+	<script th:src="@{/resources/js/homer.js}"></script>
+
+	<script>
+		$(function() {
+
+			/**
+			 * Flot charts data and options
+			 */
+			var data1 = [ [ 0, 55 ], [ 1, 48 ], [ 2, 40 ], [ 3, 36 ],
+					[ 4, 40 ], [ 5, 60 ], [ 6, 50 ], [ 7, 51 ] ];
+			var data2 = [ [ 0, 56 ], [ 1, 49 ], [ 2, 41 ], [ 3, 38 ],
+					[ 4, 46 ], [ 5, 67 ], [ 6, 57 ], [ 7, 59 ] ];
+
+			var chartUsersOptions = {
+				series : {
+					splines : {
+						show : true,
+						tension : 0.4,
+						lineWidth : 1,
+						fill : 0.4
+					},
+				},
+				grid : {
+					tickColor : "#f0f0f0",
+					borderWidth : 1,
+					borderColor : 'f0f0f0',
+					color : '#6a6c6f'
+				},
+				colors : [ "#62cb31", "#efefef" ],
+			};
+
+			$.plot($("#flot-line-chart"), [ data1, data2 ], chartUsersOptions);
+
+			/**
+			 * Flot charts 2 data and options
+			 */
+			var chartIncomeData = [ {
+				label : "line",
+				data : [ [ 1, 10 ], [ 2, 26 ], [ 3, 16 ], [ 4, 36 ], [ 5, 32 ],
+						[ 6, 51 ] ]
+			} ];
+
+			var chartIncomeOptions = {
+				series : {
+					lines : {
+						show : true,
+						lineWidth : 0,
+						fill : true,
+						fillColor : "#64cc34"
+
+					}
+				},
+				colors : [ "#62cb31" ],
+				grid : {
+					show : false
+				},
+				legend : {
+					show : false
+				}
+			};
+
+			$
+					.plot($("#flot-income-chart"), chartIncomeData,
+							chartIncomeOptions);
+		});
+	</script>
+</body>
+</html>

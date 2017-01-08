@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+
+</head>
+<body>
+	<div id="navigation" th:fragment="navigation">
+		<div class="profile-picture">
+			<div class="stats-label text-color">
+				<span class="font-extra-bold font-uppercase"><span
+					sec:authentication="name">Bob</span></span>
+
+				<div class="dropdown">
+					<a class="dropdown-toggle" href="#" data-toggle="dropdown"> <small
+						class="text-muted"><span
+							sec:authentication="principal.authorities">[ROLE_USER,
+								ROLE_ADMIN]</span> <b class="caret"></b></small>
+					</a>
+					<ul class="dropdown-menu animated flipInX m-t-xs">
+						<li><a href="#">Contacts</a></li>
+						<li><a href="#">Profile</a></li>
+						<li><a href="#">Messages</a></li>
+						<li class="#"></li>
+						<li><a href="/logout" th:href="@{#}"
+							onclick="$('#logoutform').submit();">Deconnexion</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<ul class="nav" id="side-menu">
+			<li class="active"><a th:href="@{/}"> <span
+					class="nav-label">Accueil</span> <span
+					class="label label-success pull-right">v.1</span>
+			</a></li>
+			<li><a href="#"><span class="nav-label">Transactions</span><span
+					class="fa arrow"></span> </a>
+				<ul class="nav nav-second-level">
+					<li><a
+						th:href="@{/rapport/}">Rapports</a></li>
+					<li><a th:href="@{/transaction/}">Recherche</a></li>
+					<li><a th:href="@{/client/liste?page=0&size=20}">Bacth</a></li>
+				</ul></li>
+			<li><a href="#"><span class="nav-label">Point Service</span><span
+					class="fa arrow"></span> </a>
+				<ul class="nav nav-second-level">
+					<li><a th:href="@{/faces/admin/agence.xhtml}">Entités</a></li>
+					<li><a th:href="@{/location/reservation}">Horaires</a></li>
+					<li><a th:href="@{/location/course}">Logs</a></li>
+					<li><a th:href="@{/location/liste}">Distributeurs</a></li>
+					<li><a th:href="@{/location/liste/reservation}">Parametrage</a></li>
+				</ul></li>
+			<li><a href="#"><span class="nav-label">Utilisateurs</span><span
+					class="fa arrow"></span> </a>
+				<ul class="nav nav-second-level">
+					<li><a th:href="@{/vehicule/new}">Recherche</a></li>
+					<li><a th:href="@{/vehicule/liste}">Nouvel utilisateur</a></li>
+					<li><a th:href="@{/vehicule/categorie}">Blackliste</a></li>
+					<li><a th:href="@{/vehicule/maintenance}">connectés</a></li>
+				</ul></li>
+			<li><a
+				href="#"><span class="nav-label">Analyse</span><span
+					class="fa arrow"></span> </a>
+				<ul class="nav nav-second-level">
+					<li><a th:href="@{/conducteur/nouveau?message=none}">Journaux</a></li>
+					<li><a th:href="@{/conducteur/recette/search}">Bordereaux</a></li>
+					<li><a th:href="@{/conducteur/liste}">Transfert en Suspens</a></li>
+					<li><a th:href="@{/conducteur/liste}">Situation Guichets</a></li>
+					<li><a th:href="@{/conducteur/liste}">Versements</a></li>
+					<li><a th:href="@{/conducteur/liste}">Aggrégats</a></li>
+				</ul></li>
+				<li><a
+				href="#"><span class="nav-label">Messages</span><span
+					class="fa arrow"></span> </a>
+				<ul class="nav nav-second-level">
+					<li><a th:href="@{/conducteur/nouveau?message=none}">Nouveau</a></li>
+					<li><a th:href="@{/conducteur/recette/search}">Mes messages</a></li>
+					<li><a th:href="@{/conducteur/recette/search}">Envoyés</a></li>
+				</ul></li>
+		</ul>
+	</div>
+</body>
+</html>
